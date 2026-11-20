@@ -4,10 +4,10 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
-pylint = "*"
-black = "*"
 pymongo = "*"
 python-dotenv = "*"
+pylint = "*"
+black = "*"
 
 [dev-packages]
 
