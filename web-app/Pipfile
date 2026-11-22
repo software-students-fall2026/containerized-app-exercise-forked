@@ -7,8 +7,8 @@ name = "pypi"
 pymongo = "*"
 python-dotenv = "*"
 pylint = "*"
-black = "*"
 flask = "*"
+black = "*"
 
 [dev-packages]
 
