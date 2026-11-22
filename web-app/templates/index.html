@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+
+{% block title %}Home{% endblock %}
+
+{% block extra_css %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/index.css') }}">
+{% endblock %}
+
+{% block content %}
+    <body>
+        <h1>Sign2Text</h1>
+
+        <video id="camera" autoplay playsinline muted></video>
+
+        <div>
+            <button id="start">Start Camera</button>
+            <button id="stop" disabled>End Camera</button>
+        </div>
+
+        <p id="message"></p>
+
+        <script>
+            const video = document.getElementById("camera");
+            const startButton = document.getElementById("start");
+            const stopButton = document.getElementById("stop");
+            const message = document.getElementById("message");
+
+            let stream = null;
+
+            startButton.addEventListener("click", async () => {
+                startButton.disabled = true;
+                message.textContent = "";
+
+                try {
+                    stream = await navigator.mediaDevices.getUserMedia({
+                        video: { width: 400, height: 400 },
+                        audio: false
+                    });
+
+                    video.srcObject = stream;
+                    stopButton.disabled = false;
+                } catch (error) {
+                    message.textContent = `Could not access camera: ${error.message}`;
+                    startButton.disabled = false;
+                }
+            });
+
+            stopButton.addEventListener("click", () => {
+                stream = null;
+                video.srcObject = null;
+
+                startButton.disabled = false;
+                stopButton.disabled = true;
+            });
+        </script>
+    </body>
+{% endblock %}
