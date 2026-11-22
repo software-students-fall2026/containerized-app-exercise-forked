@@ -7,9 +7,10 @@ name = "pypi"
 pymongo = "*"
 python-dotenv = "*"
 pylint = "*"
+flask = "*"
 black = "*"
 
 [dev-packages]
 
 [requires]
-python_version = "3.11"
+python_version = "3.15"
