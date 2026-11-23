@@ -18,5 +18,8 @@ def get_client():
 
 
 def get_db():
-    """Return the app's database."""
-    return get_client()[os.environ.get("MONGO_DBNAME", "myappdb")]
+    """Return the MongoDB database instance."""
+    mongo_uri = os.getenv("MONGO_URI", "mongodb://localhost:27017/")
+    db_name = os.getenv("MONGO_DB_NAME", "myappdb")
+    client = MongoClient(mongo_uri)
+    return client[db_name]

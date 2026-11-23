@@ -70,5 +70,35 @@
                 }, "image/jpeg");
             }, 1000);
         </script>
+
+   <hr />
+        <h2>Translated Words</h2>
+        <button id="seedBtn" type="button">Load Sample Words</button>
+        <ul id="predictions"></ul>
+
+        <script>
+            const list = document.getElementById("predictions");
+
+            async function refreshWords() {
+                const words = await fetch("/api/predictions").then((r) => r.json());
+
+                if (words.length === 0) {
+                    list.innerHTML = "<li>No words yet.</li>";
+                    return;
+                }
+
+                let html = "";
+                for (const w of words) { // word + confidence percentage
+                    const percent = Math.round(w.confidence * 100);
+                    html += `<li><strong>${w.word}</strong> (${percent}%)</li>`;
+                }
+                list.innerHTML = html;
+            }
+
+            document.getElementById("seedBtn").onclick = async () => {
+                await fetch("/api/seed", { method: "POST" });
+                refreshWords();
+            };
+        </script>
     </body>
 {% endblock %}
