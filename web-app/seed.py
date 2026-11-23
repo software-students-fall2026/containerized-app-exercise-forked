@@ -1,8 +1,12 @@
+"""Insert sample sign language word predictions into MongoDB for testing."""
+
 from datetime import datetime
 
 from db import get_db
 
+
 def seed():
+    """Reset prediction collection and insert starter sign language words."""
     database = get_db()
     database.predictions.delete_many({})
     fmt = "%Y-%m-%d %H:%M:%S"
