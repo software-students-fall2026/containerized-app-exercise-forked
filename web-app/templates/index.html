@@ -18,6 +18,7 @@
         </div>
 
         <p id="message"></p>
+        <p id="result"></p>
 
         <script>
             const video = document.getElementById("camera");
@@ -52,6 +53,22 @@
                 startButton.disabled = false;
                 stopButton.disabled = true;
             });
+
+            const canvas = document.createElement("canvas");
+
+            setInterval(() => {
+                if (!stream) return;
+                canvas.width = video.videoWidth;
+                canvas.height = video.videoHeight;
+                canvas.getContext("2d").drawImage(video, 0, 0);
+                canvas.toBlob(async (blob) => {
+                    const form = new FormData();
+                    form.append("frame", blob, "frame.jpg");
+                    const response = await fetch("/api/frame", { method: "POST", body: form });
+                    const data = await response.json();
+                    document.getElementById("result").textContent = data.text;
+                }, "image/jpeg");
+            }, 1000);
         </script>
     </body>
 {% endblock %}
