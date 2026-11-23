@@ -4,6 +4,12 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
+pymongo = "*"
+python-dotenv = "*"
+pylint = "*"
+flask = "*"
+black = "*"
+requests = "*"
 
 [dev-packages]
 
