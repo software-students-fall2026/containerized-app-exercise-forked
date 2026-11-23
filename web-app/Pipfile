@@ -9,6 +9,7 @@ python-dotenv = "*"
 pylint = "*"
 flask = "*"
 black = "*"
+requests = "*"
 
 [dev-packages]
 
