@@ -1,5 +1,5 @@
-FROM python:3.11-slim
-WORKDIR /app
+FROM python:3.15-slim
+WORKDIR /web-app
 RUN pip install --no-cache-dir pipenv
 COPY Pipfile Pipfile.lock ./
 RUN pipenv install --system --deploy
