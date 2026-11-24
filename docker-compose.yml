@@ -3,11 +3,11 @@ version: '3.8'
 services:
   mongo:
     image: mongo:latest
-    container_name: ds-mongo
+    container_name: s2t-mongo
     ports:
       - '27017:27017'
-    # volumes:
-    #   - mongo-data:/data/db
+    volumes:
+      - mongo-data:/data/db
     environment:
       - MONGO_INITDB_ROOT_USERNAME=admin
       - MONGO_INITDB_ROOT_PASSWORD=secret
@@ -15,26 +15,22 @@ services:
   ml-client:
     build: ./machine-learning-client
     container_name: ml-client
-    # volumes:
-    #   - /data/backend:/app
     ports:
       - '6700:6700'
-    # environment:
-      
-    # depends_on:
-    #   - mongo
-    # command: sh -c "npm install && npm start"
+    environment:
+      MONGO_URI: mongodb://mongo:27017/sign2text
+    depends_on:
+      - mongo
+  
   web-app:
     build: ./web-app
     container_name: web-app
-    # volumes:
-    #   - /data/front-end:/app
-    # environment:
-      
+    environment:
+      MONGO_URI: mongodb://mongo:27017/sign2text
     ports:
       - 5000:5000
-    # depends_on:
-    #   - ml-client
-    #   - mongo
-# volumes:
-#   mongo-data:
+    depends_on:
+      - mongo
+
+volumes:
+  mongo-data:
