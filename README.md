@@ -1,4 +1,6 @@
 ![Lint-free](https://github.com/nyu-software-engineering/containerized-app-exercise/actions/workflows/lint.yml/badge.svg)
+[![ml-ci](https://github.com/software-students-fall2026/containerized-app-exercise-forked/actions/workflows/ml-ci.yml/badge.svg)](https://github.com/software-students-fall2026/containerized-app-exercise-forked/actions/workflows/ml-ci.yml)
+[![web-app-ci](https://github.com/software-students-fall2026/containerized-app-exercise-forked/actions/workflows/web-app-ci.yml/badge.svg)](https://github.com/software-students-fall2026/containerized-app-exercise-forked/actions/workflows/web-app-ci.yml)
 
 # Sign2Text
 

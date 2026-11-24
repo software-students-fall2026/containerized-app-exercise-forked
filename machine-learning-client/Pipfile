@@ -9,6 +9,8 @@ python-dotenv = "*"
 pylint = "*"
 black = "*"
 flask = "*"
+pytest = "*"
+pytest-cov = "*"
 
 [dev-packages]
 
