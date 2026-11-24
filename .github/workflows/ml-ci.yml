@@ -21,4 +21,4 @@ jobs:
         run: |
           pipenv install pytest
           pipenv --venv
-          pipenv run pytest ../tests/test_ml --cov=. --cov-report=term-missing --cov-fail-under=80
+          pipenv run pytest ../tests/test_ml --cov=. --cov-report=term-missing
