@@ -1,5 +1,6 @@
 """Flask API that runs predictions on frames and stores results in MongoDB."""
 
+import os
 from datetime import datetime, timezone
 
 from flask import Flask, jsonify, request

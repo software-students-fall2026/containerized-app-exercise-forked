@@ -22,6 +22,7 @@ def get_db():
     """Return the app's database."""
     return get_client()[os.environ.get("MONGO_DBNAME", "myappdb")]
 
+
 @lru_cache(maxsize=1)
 def get_landmarker():
     """Load the hand landmarker once and reuse it."""
