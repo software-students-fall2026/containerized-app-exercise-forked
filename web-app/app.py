@@ -25,7 +25,7 @@ def index():
 
 @app.route("/api/frame", methods=["POST"])
 def forward_frame():
-    """Forward a camera frame from the browser to the ML client."""
+    """Forwards a camera frame from the browser to the ML client."""
     frame = request.files["frame"]
     response = requests.post(
         f"{ML_CLIENT_URL}/predict",
