@@ -12,7 +12,7 @@ load_dotenv()  # for local runs; in Docker, env vars come from env_file
 @lru_cache(maxsize=1)
 def get_client():
     """Create the MongoClient once and reuse it on later calls."""
-    client = MongoClient(os.environ["MONGO_URI"])
+    client = MongoClient(os.getenv("MONGO_URI", "mongodb://localhost:27017/"))
     client.admin.command("ping")  # fail fast on bad URI, auth, or IP access
     return client
 
