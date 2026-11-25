@@ -9,6 +9,7 @@ from db import get_db
 from predict import predict_word
 
 app = Flask(__name__)
+app.secret_key = os.getenv("SECRET_KEY", os.urandom(24))
 
 
 @app.get("/health")
