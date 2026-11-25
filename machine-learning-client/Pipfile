@@ -11,6 +11,7 @@ black = "*"
 flask = "*"
 pytest = "*"
 pytest-cov = "*"
+mediapipe = "*"
 
 [dev-packages]
 
