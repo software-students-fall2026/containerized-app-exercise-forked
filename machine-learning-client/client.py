@@ -1,12 +1,11 @@
 """Flask API that runs predictions on frames and stores results in MongoDB."""
 
-import os
 from datetime import datetime, timezone
 
 from flask import Flask, jsonify, request
 
 from db import get_db
-from predict import predict_word
+from predict import predict_letter
 
 app = Flask(__name__)
 
@@ -19,26 +18,26 @@ def health():
 
 @app.post("/predict")
 def predict():
-    """Predict a word from a list of frames and save the result."""
+    """Predict a letter from a list of frames and save the result."""
     body = request.get_json(silent=True) or {}
     frames = body.get("frames")
     if not isinstance(frames, list) or not frames:
         return jsonify(error="send a non-empty list of frames"), 400
 
     try:
-        word, confidence = predict_word(frames)
+        letter, confidence = predict_letter(frames)
     except ValueError as exc:  # e.g. a frame that isn't a valid image
         return jsonify(error=str(exc)), 400
 
     get_db().predictions.insert_one(
         {
-            "word": word,
+            "letter": letter,
             "confidence": confidence,
             "num_frames": len(frames),
             "created_at": datetime.now(timezone.utc),
         }
     )
-    return jsonify(word=word, confidence=confidence)
+    return jsonify(letter=letter, confidence=confidence)
 
 
 if __name__ == "__main__":
