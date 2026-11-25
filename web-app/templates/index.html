@@ -48,7 +48,6 @@
 
             stopButton.addEventListener("click", () => {
                 stream?.getTracks().forEach(track => track.stop());
-
                 stream = null;
                 video.srcObject = null;
 
