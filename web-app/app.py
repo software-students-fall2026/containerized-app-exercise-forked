@@ -43,7 +43,7 @@ def get_predictions():
     predictions = [
         {
             "id": str(doc["_id"]),
-            "word": doc.get("word", ""),
+            "letter": doc.get("letter") or doc.get("word", ""),
             "confidence": doc.get("confidence", 0),
             "created_at": str(doc.get("created_at", "")),
         }
@@ -54,9 +54,17 @@ def get_predictions():
 
 @app.route("/api/seed", methods=["POST"])
 def run_seed():
-    """Insert sample words into MongoDB."""
+    """Insert sample letters into MongoDB."""
     seed()
     return jsonify({"status": "seeded"})
+
+
+@app.route("/api/predictions", methods=["DELETE"])
+def clear_predictions():
+    """Delete all stored predictions from MongoDB."""
+    database = get_db()
+    result = database.predictions.delete_many({})
+    return jsonify({"deleted": result.deleted_count})
 
 
 if __name__ == "__main__":
