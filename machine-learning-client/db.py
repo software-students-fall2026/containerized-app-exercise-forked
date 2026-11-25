@@ -25,6 +25,7 @@ def get_db():
 @lru_cache(maxsize=1)
 def get_landmarker():
     """Load the hand landmarker once and reuse it."""
+    # vision = computer vision
     opts = vision.HandLandmarkerOptions(
         base_options=BaseOptions(model_asset_path="models/hand_landmarker.task")
     )
