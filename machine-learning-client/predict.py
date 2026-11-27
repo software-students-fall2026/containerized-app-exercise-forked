@@ -1,8 +1,8 @@
 """Prediction logic for the machine learning client."""
 
 
-def predict_word(frames):
-    """Return a (word, confidence) prediction for a list of frames.
+def predict_letter(frames):
+    """Return a (letter, confidence) prediction for a list of frames.
 
     Placeholder until the real model is added. Raise ValueError for invalid
     input so the /predict route can return a 400 response.
