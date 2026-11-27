@@ -54,25 +54,25 @@ setInterval(() => {
   }, "image/jpeg");
 }, 1000);
 
-async function refreshWords() {
+async function refreshLetters() {
   const response = await fetch("/api/predictions");
-  const words = await response.json();
+  const letters = await response.json();
 
   list.replaceChildren();
 
-  if (words.length === 0) {
+  if (letters.length === 0) {
     const item = document.createElement("li");
-    item.textContent = "No words yet.";
+    item.textContent = "No letters yet.";
     list.appendChild(item);
     return;
   }
 
-  for (const word of words) {
-    const percent = Math.round(word.confidence * 100);
+  for (const letter of letters) {
+    const percent = Math.round(letter.confidence * 100);
     const item = document.createElement("li");
     const label = document.createElement("strong");
 
-    label.textContent = word.word;
+    label.textContent = letter.letter;
     item.append(label, ` (${percent}%)`);
     list.appendChild(item);
   }
@@ -80,5 +80,5 @@ async function refreshWords() {
 
 document.getElementById("seedBtn").onclick = async () => {
   await fetch("/api/seed", { method: "POST" });
-  await refreshWords();
+  await refreshLetters();
 };
