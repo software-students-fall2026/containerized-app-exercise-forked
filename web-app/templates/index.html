@@ -1,105 +1,29 @@
-{% extends "base.html" %}
+{% extends "base.html" %} {% block title %}Home{% endblock %} {% block extra_css
+%}
+<link
+  rel="stylesheet"
+  href="{{ url_for('static', filename='css/index.css') }}"
+/>
+{% endblock %} {% block content %}
+<body>
+  <h1>Sign2Text</h1>
 
-{% block title %}Home{% endblock %}
+  <video id="camera" autoplay playsinline muted></video>
 
-{% block extra_css %}
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/index.css') }}">
-{% endblock %}
+  <div>
+    <button id="start">Start Camera</button>
+    <button id="stop" disabled>End Camera</button>
+  </div>
 
-{% block content %}
-    <body>
-        <h1>Sign2Text</h1>
+  <p id="message"></p>
+  <p id="result"></p>
 
-        <video id="camera" autoplay playsinline muted></video>
+  <hr />
 
-        <div>
-            <button id="start">Start Camera</button>
-            <button id="stop" disabled>End Camera</button>
-        </div>
+  <h2>Translated Words</h2>
+  <button id="seedBtn" type="button">Load Sample Words</button>
+  <ul id="predictions"></ul>
 
-        <p id="message"></p>
-        <p id="result"></p>
-
-        <script>
-            const video = document.getElementById("camera");
-            const startButton = document.getElementById("start");
-            const stopButton = document.getElementById("stop");
-            const message = document.getElementById("message");
-
-            let stream = null;
-
-            startButton.addEventListener("click", async () => {
-                startButton.disabled = true;
-                message.textContent = "";
-
-                try {
-                    stream = await navigator.mediaDevices.getUserMedia({
-                        video: { width: 400, height: 400 },
-                        audio: false
-                    });
-
-                    video.srcObject = stream;
-                    stopButton.disabled = false;
-                } catch (error) {
-                    message.textContent = `Could not access camera: ${error.message}`;
-                    startButton.disabled = false;
-                }
-            });
-
-            stopButton.addEventListener("click", () => {
-                stream?.getTracks().forEach(track => track.stop());
-                stream = null;
-                video.srcObject = null;
-
-                startButton.disabled = false;
-                stopButton.disabled = true;
-            });
-
-            const canvas = document.createElement("canvas");
-
-            setInterval(() => {
-                if (!stream) return;
-                canvas.width = video.videoWidth;
-                canvas.height = video.videoHeight;
-                canvas.getContext("2d").drawImage(video, 0, 0);
-                canvas.toBlob(async (blob) => {
-                    const form = new FormData();
-                    form.append("frame", blob, "frame.jpg");
-                    const response = await fetch("/api/frame", { method: "POST", body: form });
-                    const data = await response.json();
-                    document.getElementById("result").textContent = data.text;
-                }, "image/jpeg");
-            }, 1000);
-        </script>
-
-   <hr />
-        <h2>Translated Words</h2>
-        <button id="seedBtn" type="button">Load Sample Words</button>
-        <ul id="predictions"></ul>
-
-        <script>
-            const list = document.getElementById("predictions");
-
-            async function refreshWords() {
-                const words = await fetch("/api/predictions").then((r) => r.json());
-
-                if (words.length === 0) {
-                    list.innerHTML = "<li>No words yet.</li>";
-                    return;
-                }
-
-                let html = "";
-                for (const w of words) { // word + confidence percentage
-                    const percent = Math.round(w.confidence * 100);
-                    html += `<li><strong>${w.word}</strong> (${percent}%)</li>`;
-                }
-                list.innerHTML = html;
-            }
-
-            document.getElementById("seedBtn").onclick = async () => {
-                await fetch("/api/seed", { method: "POST" });
-                refreshWords();
-            };
-        </script>
-    </body>
+  <script src="{{ url_for('static', filename='js/index.js') }}" defer></script>
+</body>
 {% endblock %}
