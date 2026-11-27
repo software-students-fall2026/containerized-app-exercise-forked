@@ -4,6 +4,7 @@ import os
 
 from dotenv import load_dotenv
 from flask import Flask, jsonify, render_template, request
+import base64
 import requests
 
 from db import get_db
@@ -27,9 +28,10 @@ def index():
 def forward_frame():
     """Forwards a camera frame from the browser to the ML client."""
     frame = request.files["frame"]
+    encoded_frame = base64.b64encode(frame.read()).decode("ascii")
     response = requests.post(
         f"{ML_CLIENT_URL}/predict",
-        files={"frame": ("frame.jpg", frame.read(), "image/jpeg")},
+        json={"frames": [encoded_frame]},
         timeout=10,
     )
     return jsonify(response.json())
