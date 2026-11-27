@@ -9,4 +9,4 @@ def predict_letter(frames):
     """
     if not frames:
         raise NotImplementedError(f"model not implemented yet ({len(frames)} frames)")
-    return 'S', 0.95 #stub
+    return 'S', 0.95 # stub
