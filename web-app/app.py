@@ -2,9 +2,9 @@
 
 import os
 
+import base64
 from dotenv import load_dotenv
 from flask import Flask, jsonify, render_template, request
-import base64
 import requests
 
 from db import get_db
