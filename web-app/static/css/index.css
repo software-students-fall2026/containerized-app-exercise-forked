@@ -1,21 +1,67 @@
+body {
+    margin: 0;
+    background-color: var(--parchment);
+    font-family: "Quicksand", sans-serif;
+}
+
+main {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.layout {
+    --cam-width: min(55vw, 800px);
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    gap: 2rem;
+}
+
 #camera {
-  display: block;
-  width: min(90vw, 960px);
-  aspect-ratio: 16 / 9;
-  margin: 2rem auto 1rem;
-  object-fit: cover;
-  background: #000;
-  border-radius: 12px;
+    display: block;
+    width: var(--cam-width);
+    aspect-ratio: 16 / 9;
+    margin: 0 auto 1rem;
+    object-fit: cover;
+    background: var(--cobalt);
+    border-radius: 12px;
 }
 
 .camera-controls {
-  display: flex;
-  justify-content: center;
-  gap: 0.5rem;
+    display: flex;
+    justify-content: center;
+    gap: 0.5rem;
 }
 
 h1,
 #message,
 #result {
-  text-align: center;
+    text-align: center;
+    font-size: 3rem;
+    font-family: "Archivo Black", sans-serif;
+    color: var(--cobalt);
+}
+
+.history-panel h2 {
+    margin-top: 0;
+    color: var(--cobalt);
+}
+
+.history-panel {
+    box-sizing: border-box;
+    width: calc(var(--cam-width) / 2);
+    aspect-ratio: 8 / 9;
+    display: flex;
+    flex-direction: column;
+    padding: 1rem 1.5rem;
+    border: 2px solid var(--cobalt);
+    border-radius: 12px;
+    background-color: var(--parchment);
+}
+
+#predictions {
+    flex: 1;
+    overflow-y: auto;
+    margin: 1rem 0 0;
 }
