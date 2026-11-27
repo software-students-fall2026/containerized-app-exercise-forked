@@ -59,5 +59,16 @@ def run_seed():
     return jsonify({"status": "seeded"})
 
 
+@app.route("/api/stats/letters")
+def letter_stats():
+    """Count how many times each letter has been predicted."""
+    pipeline = [
+        {"$group": {"_id": "$letter", "count": {"$sum": 1}}},
+        {"$sort": {"count": -1}},
+    ]
+    results = get_db().predictions.aggregate(pipeline)
+    return jsonify([{"letter": r["_id"], "count": r["count"]} for r in results])
+
+
 if __name__ == "__main__":
     app.run()
