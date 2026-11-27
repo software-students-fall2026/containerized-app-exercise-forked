@@ -7,6 +7,6 @@ def predict_letter(frames):
     Placeholder until the real model is added. Raise ValueError for invalid
     input so the /predict route can return a 400 response.
     """
-    if (not frames): 
+    if not frames:
         raise NotImplementedError(f"model not implemented yet ({len(frames)} frames)")
     return 'S', 0.95 #stub
