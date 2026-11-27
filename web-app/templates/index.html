@@ -72,32 +72,32 @@
         </script>
 
    <hr />
-        <h2>Translated Words</h2>
-        <button id="seedBtn" type="button">Load Sample Words</button>
+        <h2>Translated Letters</h2>
+        <button id="seedBtn" type="button">Load Sample Letters</button>
         <ul id="predictions"></ul>
 
         <script>
             const list = document.getElementById("predictions");
 
-            async function refreshWords() {
-                const words = await fetch("/api/predictions").then((r) => r.json());
+            async function refreshLetters() {
+                const letters = await fetch("/api/predictions").then((r) => r.json());
 
-                if (words.length === 0) {
-                    list.innerHTML = "<li>No words yet.</li>";
+                if (letters.length === 0) {
+                    list.innerHTML = "<li>No letters yet.</li>";
                     return;
                 }
 
                 let html = "";
-                for (const w of words) { // word + confidence percentage
-                    const percent = Math.round(w.confidence * 100);
-                    html += `<li><strong>${w.word}</strong> (${percent}%)</li>`;
+                for (const l of letters) { // letter + confidence percentage
+                    const percent = Math.round(l.confidence * 100);
+                    html += `<li><strong>${l.letter}</strong> (${percent}%)</li>`;
                 }
                 list.innerHTML = html;
             }
 
             document.getElementById("seedBtn").onclick = async () => {
                 await fetch("/api/seed", { method: "POST" });
-                refreshWords();
+                refreshLetters();
             };
         </script>
     </body>

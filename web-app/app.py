@@ -43,7 +43,7 @@ def get_predictions():
     predictions = [
         {
             "id": str(doc["_id"]),
-            "word": doc.get("word", ""),
+            "letter": doc.get("letter", ""),
             "confidence": doc.get("confidence", 0),
             "created_at": str(doc.get("created_at", "")),
         }
@@ -54,7 +54,7 @@ def get_predictions():
 
 @app.route("/api/seed", methods=["POST"])
 def run_seed():
-    """Insert sample words into MongoDB."""
+    """Insert sample letters into MongoDB."""
     seed()
     return jsonify({"status": "seeded"})
 
