@@ -12,6 +12,11 @@ flask = "*"
 pytest = "*"
 pytest-cov = "*"
 mediapipe = "*"
+scikit-learn = "*"
+numpy = "*"
+joblib = "*"
+kagglehub = "*"
+ultralytics = "*"
 
 [dev-packages]
 
