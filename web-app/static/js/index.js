@@ -37,7 +37,7 @@ stopButton.addEventListener("click", () => {
   stopButton.disabled = true;
 });
 
-setInterval(() => {
+setInterval(async () => {
   if (!stream) return;
   canvas.width = video.videoWidth;
   canvas.height = video.videoHeight;
@@ -50,8 +50,15 @@ setInterval(() => {
     const response = await fetch("/api/frame", { method: "POST", body: form });
 
     const data = await response.json();
-    document.getElementById("result").textContent = data.text;
+
+    if (!response.ok) {
+      message.textContent = data.error || "Prediction failed.";
+      return;
+    }
+
+    result.textContent = data.letter;
   }, "image/jpeg");
+  await refreshLetters();
 }, 1000);
 
 async function refreshLetters() {
