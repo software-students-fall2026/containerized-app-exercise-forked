@@ -1,28 +1,33 @@
-{% extends "base.html" %} {% block title %}Home{% endblock %} {% block extra_css
-%}
-<link
-  rel="stylesheet"
-  href="{{ url_for('static', filename='css/index.css') }}"
-/>
-{% endblock %} {% block content %}
+{% extends "base.html" %} 
+{% block title %}Home{% endblock %} 
+
+{% block extra_css%}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/index.css') }}" />
+{% endblock %} 
+
+{% block content %}
 <body>
   <h1>Sign2Text</h1>
 
-  <video id="camera" autoplay playsinline muted></video>
+  <div class="layout">
+    <section class="camera-panel">
+      <video id="camera" autoplay playsinline muted></video>
 
-  <div>
-    <button id="start">Start Camera</button>
-    <button id="stop" disabled>End Camera</button>
+      <div class="camera-controls">
+        <button id="start">Start Camera</button>
+        <button id="stop" disabled>End Camera</button>
+      </div>
+
+      <p id="message"></p>
+      <p id="result"></p>
+    </section>
+
+    <section class="history-panel">
+      <h2>Translated Words</h2>
+      <button id="seedBtn" type="button">Load Sample Words</button>
+      <ul id="predictions"></ul>
+    </section>
   </div>
-
-  <p id="message"></p>
-  <p id="result"></p>
-
-  <hr />
-
-  <h2>Translated Words</h2>
-  <button id="seedBtn" type="button">Load Sample Words</button>
-  <ul id="predictions"></ul>
 
   <script src="{{ url_for('static', filename='js/index.js') }}" defer></script>
 </body>
