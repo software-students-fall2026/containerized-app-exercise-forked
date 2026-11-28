@@ -1,0 +1,5 @@
+[MAIN]
+
+[TYPECHECK]
+# cv2 is compiled code, so pylint cannot see its functions
+generated-members=cv2.*
